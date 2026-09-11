@@ -16,21 +16,22 @@ Disaster management during acute urban flooding requires **deterministic, sub-mi
 ## Complete Table of Contents
 1. [Core Architectural Principles & Separation of Concerns](#1-core-architectural-principles)
 2. [End-to-End System Architecture Diagram](#2-end-to-end-system-architecture-diagram)
-3. [Phase 1 — Complete Deprecation of Quantum Layer](#3-phase-1--complete-deprecation-of-quantum-layer)
-4. [Phase 2 — Vijayawada Road Graph Engine & Edge Weight Model](#4-phase-2--vijayawada-road-graph-engine)
-5. [Phase 3 — A* Initial Routing Engine](#5-phase-3--a-initial-routing-engine)
-6. [Phase 4 — D* Lite Incremental Dynamic Replanning Engine](#6-phase-4--d-lite-incremental-dynamic-replanning-engine)
-7. [Phase 5 — Live Road Monitoring & Supabase Realtime Bus](#7-phase-5--live-road-monitoring--supabase-realtime-bus)
-8. [Phase 6 — Gemini AI Decision-Only Integration](#8-phase-6--gemini-ai-decision-only-integration)
-9. [Phase 7 — Priority-Queue Rescue Team Assignment](#9-phase-7--priority-queue-rescue-team-assignment)
-10. [Phase 8 — Emergency 108 Ambulance Hospital Corridors](#10-phase-8--emergency-108-ambulance-hospital-corridors)
-11. [Phase 9 — Capacity & Exposure-Weighted Shelter Recommendation](#11-phase-9--capacity--exposure-weighted-shelter-recommendation)
-12. [Phase 10 — Dynamic Re-Optimization & Cascade Triggering](#12-phase-10--dynamic-re-optimization--cascade-triggering)
-13. [Phase 11 — Leaflet Tactical GIS Map & Color Legend](#13-phase-11--leaflet-tactical-gis-map)
-14. [Phase 12 — Command Dashboard & Tactical Telemetry Cards](#14-phase-12--command-dashboard)
-15. [Phase 13 — Backend REST APIs & Schema Specifications](#15-phase-13--backend-rest-apis)
-16. [Phase 14 — Automated Verification Test Suite (5 Scenarios)](#16-phase-14--automated-verification-test-suite)
-17. [File-by-File Migration Checklist](#17-file-by-file-migration-checklist)
+3. [Phase 0 — Pre-Disaster AI Early Warning, Inundation Forecasting & Red Zone Safety Alerts](#3-phase-0--pre-disaster-ai-early-warning)
+4. [Phase 1 — Complete Deprecation of Quantum Layer](#4-phase-1--complete-deprecation-of-quantum-layer)
+5. [Phase 2 — Vijayawada Road Graph Engine & Edge Weight Model](#5-phase-2--vijayawada-road-graph-engine)
+6. [Phase 3 — A* Initial Routing Engine](#6-phase-3--a-initial-routing-engine)
+7. [Phase 4 — D* Lite Incremental Dynamic Replanning Engine](#7-phase-4--d-lite-incremental-dynamic-replanning-engine)
+8. [Phase 5 — Live Road Monitoring & Supabase Realtime Bus](#8-phase-5--live-road-monitoring--supabase-realtime-bus)
+9. [Phase 6 — Gemini AI Decision-Only Integration](#9-phase-6--gemini-ai-decision-only-integration)
+10. [Phase 7 — Priority-Queue Rescue Team Assignment](#10-phase-7--priority-queue-rescue-team-assignment)
+11. [Phase 8 — Emergency 108 Ambulance Hospital Corridors](#11-phase-8--emergency-108-ambulance-hospital-corridors)
+12. [Phase 9 — Capacity & Exposure-Weighted Shelter Recommendation](#12-phase-9--capacity--exposure-weighted-shelter-recommendation)
+13. [Phase 10 — Dynamic Re-Optimization & Cascade Triggering](#13-phase-10--dynamic-re-optimization--cascade-triggering)
+14. [Phase 11 — Leaflet Tactical GIS Map & Color Legend](#14-phase-11--leaflet-tactical-gis-map)
+15. [Phase 12 — Command Dashboard & Tactical Telemetry Cards](#15-phase-12--command-dashboard)
+16. [Phase 13 — Backend REST APIs & Schema Specifications](#16-phase-13--backend-rest-apis)
+17. [Phase 14 — Automated Verification Test Suite (5 Scenarios)](#17-phase-14--automated-verification-test-suite)
+18. [File-by-File Migration Checklist](#18-file-by-file-migration-checklist)
 
 ---
 
@@ -40,18 +41,24 @@ Disaster management during acute urban flooding requires **deterministic, sub-mi
 +-------------------------------------------------------------------------------+
 |                       STRICT SEPARATION OF CONCERNS                           |
 +-------------------------------------------------------------------------------+
-| 1. PERCEPTION & TRIAGE   ──> Google Gemini AI                                 |
-|    • Parses citizen voice/photos.                                             |
+| 0. PRE-DISASTER INUNDATION AI ──> Hydrological Forecasting Neural Engine      |
+|    • Ingests Prakasam Barrage discharge, radar rainfall, soil moisture.       |
+|    • Generates 4-Tier High Alert & Red Zone spatial polygons.                 |
+|    • Broadcasts automated multi-channel safety warnings & dry evac routes.    |
+|    • Pre-positions watercraft and ambulances at elevated ramps outside zones. |
++-------------------------------------------------------------------------------+
+| 1. PERCEPTION & TRIAGE        ──> Google Gemini AI                            |
+|    • Parses citizen voice/photos during active crisis.                        |
 |    • Computes Urgency Score (0-100) & Medical Priority.                       |
 |    • Ranks Candidate Shelters by headroom and vulnerability profile.          |
 |    • NEVER TOUCHES COORDINATES OR ROUTES.                                     |
 +-------------------------------------------------------------------------------+
-| 2. SPATIO-TEMPORAL GRAPH ──> A* & D* Lite Dynamic Graph Engine                |
+| 2. SPATIO-TEMPORAL GRAPH      ──> A* & D* Lite Dynamic Graph Engine           |
 |    • Maintains Vijayawada topological directed graph G = (V, E).              |
 |    • Computes initial route from origin to destination via A*.                |
 |    • Dynamically reroutes active agents via D* Lite when road weights mutate. |
 +-------------------------------------------------------------------------------+
-| 3. REALTIME STATE BUS    ──> Supabase Realtime + Server-Sent Events (SSE)     |
+| 3. REALTIME STATE BUS         ──> Supabase Realtime + Server-Sent Events (SSE)|
 |    • Watches PostgreSQL table 'roads' and 'missions'.                         |
 |    • Pushes instant topological edge mutations to client viewports.           |
 |    • 0ms refresh rate; seamless vector redrawing on Leaflet.                  |
@@ -67,7 +74,15 @@ Disaster management during acute urban flooding requires **deterministic, sub-mi
 |                                      RESQNOVA DYNAMIC ROUTING ARCHITECTURE                                |
 +===========================================================================================================+
 |                                                                                                           |
-|   [CITIZEN EDGE / SOS INGESTION]                                                                          |
+|   [STAGE 0: PRE-DISASTER AI EARLY WARNING & RED-ZONE FORECASTING (T-48h to T-0h)]                         |
+|   • Ingests: Upstream Inflow (cusecs) + Doppler Rain (mm) + Soil Saturation (%) + Barrage Gates Open     |
+|   • Model: BiLSTM Attention / PINN Saint-Venant (HSI 0.0 - 1.0)                                           |
+|   • Spatially Delimits: Red Zone (>3m), Orange Zone (1.5-3m), Yellow Zone (0.5-1.5m), Green Zone Hubs     |
+|   • Broadcasts: Cell Broadcast SMS + WhatsApp Blasts + In-Portal Red Alert Banners + Municipal Sirens    |
+|   • Pre-Emptive Action: Turn-by-turn dry routing via A* to safe shelters before roads submerge           |
+|                                       │                                                                   |
+|                                       ▼                                                                   |
+|   [STAGE 1: DURING-DISASTER CITIZEN EDGE / SOS INGESTION (T-0h Onwards)]                                  |
 |   • Mobile Web Geolocation: lat/lng (e.g. Krishna Lanka: 16.5038, 80.6432)                                |
 |   • Distress Description & Scene Image                                                                    |
 |                                       │                                                                   |
@@ -111,7 +126,44 @@ Disaster management during acute urban flooding requires **deterministic, sub-mi
 
 ---
 
-# 3. Phase 1 — Complete Deprecation of Quantum Layer
+# 3. Phase 0 — Pre-Disaster AI Early Warning, Inundation Forecasting & Red Zone Safety Alerts
+
+Before floodwaters breach the urban bunds of Vijayawada, ResQNova executes an autonomous pre-disaster prediction and warning pipeline:
+
+### 1. Upstream Hydrological Sensing & Data Pipeline:
+- **Prakasam Barrage Gauging Telemetry:** Monitors discharge $Q_{\text{discharge}}$ ($ft^3/s$) and upstream inflows from Nagarjuna Sagar and Pulichintala dams.
+- **Doppler Precipitation Radar ($I_{\text{rain}}$):** 24-hour rainfall accumulation in $mm$.
+- **Antecedent Soil Moisture Saturation ($S_{\text{soil}}$):** Tracks catchment saturation percentage ($40\% - 100\%$).
+- **Sluice Gate Ingestion:** Open gate count out of 70 barrage gates and lifting velocity.
+
+### 2. Normalized Hydraulic Severity Index (HSI):
+$$\text{HSI} = 0.46 \cdot \left(\frac{Q_{\text{discharge}} - 150,000}{700,000}\right) + 0.32 \cdot \left(\frac{I_{\text{rain}} - 20}{330}\right) + 0.14 \cdot \left(\frac{S_{\text{soil}} - 40}{60}\right) + 0.08 \cdot \left(\frac{G_{\text{open}} - 10}{60}\right)$$
+
+- $\text{HSI} < 0.32 \implies$ **Stage 0: Advisory Low Flood** (Riverbank rise; 1 Red & 1 Yellow Area).
+- $0.32 \le \text{HSI} < 0.58 \implies$ **Stage 1: Moderate Flood Alert** (Main bunds under pressure; 2 Red & 2 Yellow Areas).
+- $0.58 \le \text{HSI} < 0.78 \implies$ **Stage 2: Severe Inundation Warning** (Canal outfalls overspilling; 3 Red & 3 Yellow Areas).
+- $\text{HSI} \ge 0.78 \implies$ **Stage 3: Catastrophic Flash Inundation** (Major breaches; 4 Red & 4 Yellow Areas).
+
+### 3. High Alert & Red Zone Spatial Delimitation:
+ResQNova generates spatial GeoJSON polygons delineating:
+- 🚨 **Red Zone (Immediate Evacuation / High Alert):** Water level $> 3.0\text{ m}$ (Krishna Lanka Riverfront, Ranigari Thota, Tarapet Confluence). Population at risk: $50,900+$.
+- 🟠 **Orange / Yellow Zone (High Alert / Catchment Watch):** Water level $1.5 - 3.0\text{ m}$ (Bhavanipuram Low Catchment, Vidyadharapuram Spillway).
+- 🟢 **Green Zone (Safe High Ground Staging Hubs):** Elevation $> 25\text{ m}$ (Indira Gandhi Municipal Stadium, Bishop Grassi High School, SRR College).
+
+### 4. Automated Multi-Channel Safety Risk Warning Broadcast:
+When HSI reaches $\ge 0.58$ (Stage 2 or 3), the system triggers:
+1. **Geofenced SMS & WhatsApp Blast:** Dispatched to all mobile users inside the Red Zone polygon with the specific warning message and a link to turn-by-turn dry evacuation routes.
+2. **Citizen Portal High-Contrast Banner:** Renders an unmissable red alert with designated shelter destination and safe departure window.
+3. **Automated Telugu/English IVRS Calls:** Direct outbound voice advisories to registered vulnerable citizens.
+4. **Municipal Acoustic Sirens:** Remote wireless trigger of high-decibel ward sirens.
+5. **Strategic Asset Pre-Positioning:** Staging NDRF Zodiac boats at Riverfront Jetty Alpha and 108 ALS ambulances at Varadhi South Highway Ramp *before* access roads are inundated.
+
+### 5. Pre-Emptive Dry Evacuation Routing via A*:
+While roads are still dry, A* plans optimal, congestion-weighted mass evacuation routes guiding citizens away from the expanding Red Zone polygons to safe high-ground shelters.
+
+---
+
+# 4. Phase 1 — Complete Deprecation of Quantum Layer
 
 All references to quantum mechanics, QAOA, QUBO, and simulated physical Hamiltonians are to be cleanly removed and replaced with standard deterministic routing constructs:
 
@@ -547,3 +599,4 @@ Every pull request and build must pass these five automated scenarios:
 
 ### Engineering Sign-off:
 This architecture provides an **industrial, mathematically verified, zero-latency disaster management engine** purpose-built for the reality of the Vijayawada flood basin.
+
